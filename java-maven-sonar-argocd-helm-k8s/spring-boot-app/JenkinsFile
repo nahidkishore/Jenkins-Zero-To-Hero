@@ -6,26 +6,15 @@ pipeline {
         }
     }
 
-    stages {
-        stage('Prepare Workspace') { // Add a new stage to prepare the workspace
-            steps {
-                sh 'sudo chown -R jenkins:jenkins /var/lib/jenkins/workspace'
-            }
-        }
-   stages {
-        stage('Clean Workspace') {
-            steps {
-                deleteDir() // Clean the workspace before checking out
-            }
-        }
+    
+   
+stages {
     stage('Checkout') {
-            steps {
-                // Checkout the code from your Git repository
-                checkout([$class: 'GitSCM', 
-                          branches: [[name: '*/main']],
-                          userRemoteConfigs: [[url: 'https://github.com/nahidkishore/Jenkins-Zero-To-Hero.git']]])
-            }
-        }
+      steps {
+        sh 'echo passed'
+        //git branch: 'main', url: 'https://github.com/nahidkishore/Jenkins-Zero-To-Hero.git'
+      }
+    }
         stage('Build and Test') {
             steps {
                 cleanWs() // Clean workspace before this stage

@@ -5,16 +5,25 @@ pipeline {
             args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
         }
     }
+
     stages {
         stage('Prepare Workspace') { // Add a new stage to prepare the workspace
             steps {
                 sh 'sudo chown -R jenkins:jenkins /var/lib/jenkins/workspace'
             }
         }
-        stage('Checkout') {
+   stages {
+        stage('Clean Workspace') {
             steps {
-                sh 'echo passed'
-                //git branch: 'main', url: 'https://github.com/nahidkishore/Jenkins-Zero-To-Hero.git'
+                deleteDir() // Clean the workspace before checking out
+            }
+        }
+    stage('Checkout') {
+            steps {
+                // Checkout the code from your Git repository
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/main']],
+                          userRemoteConfigs: [[url: 'https://github.com/nahidkishore/Jenkins-Zero-To-Hero.git']]])
             }
         }
         stage('Build and Test') {

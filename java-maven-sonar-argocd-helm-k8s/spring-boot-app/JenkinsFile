@@ -19,7 +19,7 @@ pipeline {
         sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn clean package'
       }
     }
-    stage('Static Code Analysis') {
+    stage('Static Code Analysis With SonarQube') {
       environment {
         SONAR_URL = "http://3.98.176.181:9000"
       }
